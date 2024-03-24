@@ -14,7 +14,7 @@
     </header>
     <dialog id="newBookDialog">
         <p>Add a book to your Library</p>
-        <form>
+        <form id="newBookForm">
             <label for="titleInput">Title:</label>
             <input type="text" id="titleInput" name="titleInput">
             <label for="authorInput">Author:</label>
@@ -23,11 +23,10 @@
             <input type="number" id="pagesInput" name="pagesInput">
             <label for="readCheckbox">Read</label>
             <input type="checkbox" id="readCheckbox" name="readCheckbox">
-        </form>
-        <div>
-            <button id="confirmAddButton">Add</button>
+            <input type="submit" id="confirmAddButton">
             <button id="cancelButton">Cancel</button>
-        </div>
+        </form>
     </dialog>
+    <div id="booksContainer"></div>
 </body>
 </html>
