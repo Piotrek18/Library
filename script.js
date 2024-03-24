@@ -1,3 +1,7 @@
+const addBookButton = document.getElementById("addBookButton");
+const newBookDialog = document.getElementById("newBookDialog");
+const cancelButton = document.getElementById("cancelButton");
+
 const myLibrary = [];
 
 function Book(title, author, pages, read) {
@@ -25,9 +29,16 @@ function addBookToLibrary(event) {
     document.getElementById("readCheckbox").checked = false;
 
     addBookToTable(newBook);
+
+    newBookDialog.close();
 }
 
 function addBookToTable(book) {
+
+    if (!book.title && !book.author && !book.pages && !book.read){
+        return;
+    }
+
     const bookBody = document.getElementById("bookBody");
 
     const newRow = document.createElement("tr");
@@ -50,9 +61,7 @@ function addBookToTable(book) {
     bookBody.appendChild(newRow);
 }
 
-const addBookButton = document.getElementById("addBookButton");
-const newBookDialog = document.getElementById("newBookDialog");
-const cancelButton = document.getElementById("cancelButton");
+
 
 
 addBookButton.addEventListener("click", () => {
@@ -60,10 +69,14 @@ addBookButton.addEventListener("click", () => {
 });
 
 cancelButton.addEventListener("click", () => {
+
+    document.getElementById("titleInput").value = "";
+    document.getElementById("authorInput").value = "";
+    document.getElementById("pagesInput").value = "";
+    document.getElementById("readCheckbox").checked = false;
     newBookDialog.close();
 });
 
-// Obsługa zdarzenia submit formularza
 document.getElementById("newBookForm").addEventListener("submit", addBookToLibrary);
 
 const sampleBook = {
