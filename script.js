@@ -24,20 +24,30 @@ function addBookToLibrary(event) {
     document.getElementById("pagesInput").value = "";
     document.getElementById("readCheckbox").checked = false;
 
-    // Wywołujemy funkcję do wyświetlania książek
-    displayBooks();
+    addBookToTable(newBook);
 }
 
-// Funkcja do wyświetlania książek
-function displayBooks() {
-    const booksContainer = document.getElementById("booksContainer");
-    booksContainer.innerHTML = ""; // Czyszczenie zawartości kontenera
+function addBookToTable(book) {
+    const bookBody = document.getElementById("bookBody");
 
-    myLibrary.forEach(book => {
-        const bookDiv = document.createElement("div");
-        bookDiv.textContent = `Title: ${book.title}, Author: ${book.author}, Pages: ${book.pages}, Read: ${book.read ? 'Yes' : 'No'}`;
-        booksContainer.appendChild(bookDiv);
-    });
+    const newRow = document.createElement("tr");
+    const titleCell = document.createElement("td");
+    titleCell.textContent = book.title;
+    newRow.appendChild(titleCell);
+
+    const authorCell = document.createElement("td");
+    authorCell.textContent = book.author;
+    newRow.appendChild(authorCell);
+
+    const pagesCell = document.createElement("td");
+    pagesCell.textContent = book.pages;
+    newRow.appendChild(pagesCell);
+
+    const readCell = document.createElement("td");
+    readCell.textContent = book.read? 'Yes' : 'No';
+    newRow.appendChild(readCell);
+
+    bookBody.appendChild(newRow);
 }
 
 const addBookButton = document.getElementById("addBookButton");
@@ -55,3 +65,12 @@ cancelButton.addEventListener("click", () => {
 
 // Obsługa zdarzenia submit formularza
 document.getElementById("newBookForm").addEventListener("submit", addBookToLibrary);
+
+const sampleBook = {
+    title: "Sample Title",
+    author: "Sample Author",
+    pages: 200,
+    read: true
+}
+
+addBookToTable(sampleBook);
