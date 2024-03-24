@@ -12,6 +12,19 @@ function addBookToLibrary(){
     myLibrary.push(newBook);
 }
 
-const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', false);
+//const theHobbit = new Book('The Hobbit', 'J.R.R. Tolkien', '295', false);
 
-console.log(theHobbit.info());
+//console.log(theHobbit.info());
+
+const addBookButton = document.getElementById("addBookButton");
+const newBookDialog = document.getElementById("newBookDialog");
+const cancelButton = document.getElementById("cancelButton");
+
+
+addBookButton.addEventListener("click", () => {
+    newBookDialog.showModal();
+});
+
+cancelButton.addEventListener("click", () => {
+    newBookDialog.close();
+});
