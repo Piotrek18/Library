@@ -117,7 +117,7 @@ const sampleBook = {
     title: "Sample Title",
     author: "Sample Author",
     pages: 200,
-    read: false
+    read: true
 }
 
 addBookToTable(sampleBook, 0);
