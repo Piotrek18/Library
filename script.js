@@ -58,7 +58,14 @@ function addBookToTable(book, index) {
     newRow.appendChild(pagesCell);
 
     const readCell = document.createElement("td");
-    readCell.textContent = book.read? 'Yes' : 'No';
+    const readCheckbox = document.createElement("input");
+    readCheckbox.type = "checkbox";
+    readCheckbox.checked = book.read;
+    readCheckbox.addEventListener("change", () => {
+        book.toggleReadStatus();
+        displayLibrary();
+    });
+    readCell.appendChild(readCheckbox);
     newRow.appendChild(readCell);
 
     const removeButtonCell = document.createElement("td");
@@ -87,6 +94,10 @@ function displayLibrary() {
     });
 }
 
+Book.prototype.toggleReadStatus = function() {
+    this.read = !this.read;
+};
+
 addBookButton.addEventListener("click", () => {
     newBookDialog.showModal();
 });
@@ -106,7 +117,7 @@ const sampleBook = {
     title: "Sample Title",
     author: "Sample Author",
     pages: 200,
-    read: true
+    read: false
 }
 
 addBookToTable(sampleBook, 0);
