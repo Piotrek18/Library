@@ -67,3 +67,54 @@ button {
 button:hover {
     background-color: #d32f2f;
 }
+
+/*dialog style*/
+
+#newBookDialog {
+    width: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+}
+
+#newBookDialog p {
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-align: center;
+}
+
+#newBookDialog label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#titleInput,
+#authorInput,
+#pagesInput {
+    width: calc(100% - 5px);
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#confirmAddButton {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 290;
+    bottom: 0;
+    right: 0;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+}
