@@ -28,12 +28,12 @@ function addBookToLibrary(event) {
     document.getElementById("pagesInput").value = "";
     document.getElementById("readCheckbox").checked = false;
 
-    addBookToTable(newBook);
+    addBookToTable(newBook, myLibrary.length - 1);
 
     newBookDialog.close();
 }
 
-function addBookToTable(book) {
+function addBookToTable(book, index) {
 
     if (!book.title && !book.author && !book.pages && !book.read){
         return;
@@ -42,6 +42,9 @@ function addBookToTable(book) {
     const bookBody = document.getElementById("bookBody");
 
     const newRow = document.createElement("tr");
+
+    newRow.dataset.index = index;
+
     const titleCell = document.createElement("td");
     titleCell.textContent = book.title;
     newRow.appendChild(titleCell);
@@ -58,11 +61,31 @@ function addBookToTable(book) {
     readCell.textContent = book.read? 'Yes' : 'No';
     newRow.appendChild(readCell);
 
+    const removeButtonCell = document.createElement("td");
+    const removeButton = document.createElement("button");
+    removeButton.textContent =  "Remove";
+    removeButton.addEventListener("click",  () => {
+        removeBook(index);
+    });
+
+    removeButtonCell.appendChild(removeButton);
+    newRow.appendChild(removeButtonCell);
     bookBody.appendChild(newRow);
 }
 
+function removeBook(index){
+    myLibrary.splice(index, 1);
 
+    displayLibrary();
+}
 
+function displayLibrary() {
+    const bookBody = document.getElementById("bookBody");
+    bookBody.innerHTML = "";
+    myLibrary.forEach((book, index) => {
+        addBookToTable(book, index);
+    });
+}
 
 addBookButton.addEventListener("click", () => {
     newBookDialog.showModal();
@@ -86,4 +109,4 @@ const sampleBook = {
     read: true
 }
 
-addBookToTable(sampleBook);
+addBookToTable(sampleBook, 0);
