@@ -112,12 +112,3 @@ cancelButton.addEventListener("click", () => {
 });
 
 document.getElementById("newBookForm").addEventListener("submit", addBookToLibrary);
-
-const sampleBook = {
-    title: "Sample Title",
-    author: "Sample Author",
-    pages: 200,
-    read: true
-}
-
-addBookToTable(sampleBook, 0);

@@ -6,14 +6,19 @@ body{
 }
 
 header {
-    background-color: #333;
-    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    background-color: #cccccc;
+    /*color: #fff;*/
     padding: 20px;
     text-align: center;
+    border-bottom: 1px solid #00000065;
 }
 
 h1 {
     margin: 0;
+    font-weight: 400;
+    letter-spacing: 1.5px;
 }
 
 #addBookButton {
@@ -40,13 +45,9 @@ th, td {
     padding: 12px 15px;
     text-align: center;
     border-bottom: 1px solid #ddd;
+    width: 20%;
 }
 
-/*thead {
-    background-color: #333;
-    color: #fff;
-}
-*/
 tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
@@ -58,6 +59,7 @@ tbody tr:hover {
 button {
     background-color: #f44336;
     color: white;
+    font-size: large;
     border: none;
     padding: 8px 10px;
     border-radius: 4px;
@@ -99,8 +101,9 @@ button:hover {
 }
 
 #confirmAddButton {
-    background-color: #007bff;
+    background-color: #4caf50;
     color: #fff;
+    font-size: large;
     border: none;
     padding: 8px 10px;
     border-radius: 4px;
