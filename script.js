@@ -2,8 +2,6 @@ const addBookButton = document.getElementById("addBookButton");
 const newBookDialog = document.getElementById("newBookDialog");
 const cancelButton = document.getElementById("cancelButton");
 
-const myLibrary = [];
-
 class Book {
     constructor(title, author, pages, read) {
         this.title = title;
@@ -11,99 +9,103 @@ class Book {
         this.pages = pages;
         this.read = read;
     } 
-    
+
     toggleReadStatus() {
         this.read = !this.read;
     }
 }
 
-function addBookToLibrary(event) {
-    event.preventDefault();     
-    const title = document.getElementById("titleInput").value;
-    const author = document.getElementById("authorInput").value;
-    const pages = document.getElementById("pagesInput").value;
-    const read = document.getElementById("readCheckbox").checked;
-
-    const newBook = new Book(title, author, pages, read);
-    myLibrary.push(newBook);
-
-    document.getElementById("titleInput").value = "";
-    document.getElementById("authorInput").value = "";
-    document.getElementById("pagesInput").value = "";
-    document.getElementById("readCheckbox").checked = false;
-
-    addBookToTable(newBook, myLibrary.length - 1);
-
-    newBookDialog.close();
-}
-
-function addBookToTable(book, index) {
-
-    if (!book.title && !book.author && !book.pages && !book.read){
-        return;
+class Library {
+    constructor(){
+        this.myLibrary = [];
     }
 
-    const bookBody = document.getElementById("bookBody");
+    addBookToLibrary(event) {
+        event.preventDefault();     
+        const title = document.getElementById("titleInput").value;
+        const author = document.getElementById("authorInput").value;
+        const pages = document.getElementById("pagesInput").value;
+        const read = document.getElementById("readCheckbox").checked;
 
-    const newRow = document.createElement("tr");
+        const newBook = new Book(title, author, pages, read);
+        this.myLibrary.push(newBook);
 
-    newRow.dataset.index = index;
+        document.getElementById("titleInput").value = "";
+        document.getElementById("authorInput").value = "";
+        document.getElementById("pagesInput").value = "";
+        document.getElementById("readCheckbox").checked = false;
 
-    const titleCell = document.createElement("td");
-    titleCell.textContent = book.title;
-    newRow.appendChild(titleCell);
+        this.addBookToTable(newBook, this.myLibrary.length - 1);
 
-    const authorCell = document.createElement("td");
-    authorCell.textContent = book.author;
-    newRow.appendChild(authorCell);
+        newBookDialog.close();  
+    }       
 
-    const pagesCell = document.createElement("td");
-    pagesCell.textContent = book.pages;
-    newRow.appendChild(pagesCell);
+    addBookToTable(book, index) {
 
-    const readCell = document.createElement("td");
-    const readCheckbox = document.createElement("input");
-    readCheckbox.type = "checkbox";
-    readCheckbox.checked = book.read;
-    readCheckbox.addEventListener("change", () => {
-        book.toggleReadStatus();
-        displayLibrary();
-    });
-    readCell.appendChild(readCheckbox);
-    newRow.appendChild(readCell);
+        if (!book.title && !book.author && !book.pages && !book.read){
+            return;
+        }
 
-    const removeButtonCell = document.createElement("td");
-    const removeButton = document.createElement("button");
-    removeButton.textContent =  "Remove";
-    removeButton.addEventListener("click",  () => {
-        removeBook(index);
-    });
+        const bookBody = document.getElementById("bookBody");
+        const newRow = document.createElement("tr");
+        newRow.dataset.index = index;
 
-    removeButtonCell.appendChild(removeButton);
-    newRow.appendChild(removeButtonCell);
-    bookBody.appendChild(newRow);
+        const titleCell = document.createElement("td");
+        titleCell.textContent = book.title;
+        newRow.appendChild(titleCell);
+
+        const authorCell = document.createElement("td");
+        authorCell.textContent = book.author;
+        newRow.appendChild(authorCell);
+
+        const pagesCell = document.createElement("td");
+        pagesCell.textContent = book.pages;
+        newRow.appendChild(pagesCell);
+
+        const readCell = document.createElement("td");
+        const readCheckbox = document.createElement("input");
+        readCheckbox.type = "checkbox";
+        readCheckbox.checked = book.read;
+        readCheckbox.addEventListener("change", () => {
+            book.toggleReadStatus();
+            this.displayLibrary();
+        });
+        readCell.appendChild(readCheckbox);
+        newRow.appendChild(readCell);
+
+        const removeButtonCell = document.createElement("td");
+        const removeButton = document.createElement("button");
+        removeButton.textContent =  "Remove";
+        removeButton.addEventListener("click",  () => {
+            this.removeBook(index);
+        });
+
+        removeButtonCell.appendChild(removeButton);
+        newRow.appendChild(removeButtonCell);
+        bookBody.appendChild(newRow);
+    }
+
+    removeBook(index){
+        this.myLibrary.splice(index, 1);
+        this.displayLibrary();
+    }
+
+    displayLibrary() {
+        const bookBody = document.getElementById("bookBody");
+        bookBody.innerHTML = "";
+        this.myLibrary.forEach((book, index) => {
+            this.addBookToTable(book, index);
+        });
+    }
 }
 
-function removeBook(index){
-    myLibrary.splice(index, 1);
-
-    displayLibrary();
-}
-
-function displayLibrary() {
-    const bookBody = document.getElementById("bookBody");
-    bookBody.innerHTML = "";
-    myLibrary.forEach((book, index) => {
-        addBookToTable(book, index);
-    });
-}
+const myLibraryInstance = new Library();
 
 addBookButton.addEventListener("click", () => {
     newBookDialog.showModal();
 });
 
 cancelButton.addEventListener("click", () => {
-
     document.getElementById("titleInput").value = "";
     document.getElementById("authorInput").value = "";
     document.getElementById("pagesInput").value = "";
@@ -111,4 +113,6 @@ cancelButton.addEventListener("click", () => {
     newBookDialog.close();
 });
 
-document.getElementById("newBookForm").addEventListener("submit", addBookToLibrary);
+document.getElementById("newBookForm").addEventListener("submit", (event) => {
+    myLibraryInstance.addBookToLibrary(event);
+}); 
