@@ -4,16 +4,21 @@ const cancelButton = document.getElementById("cancelButton");
 
 const myLibrary = [];
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-};
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+    } 
+    
+    toggleReadStatus() {
+        this.read = !this.read;
+    }
+}
 
 function addBookToLibrary(event) {
-    event.preventDefault(); // Zapobiegamy domyślnemu zachowaniu formularza (czyli wysłaniu)
-    
+    event.preventDefault();     
     const title = document.getElementById("titleInput").value;
     const author = document.getElementById("authorInput").value;
     const pages = document.getElementById("pagesInput").value;
@@ -22,7 +27,6 @@ function addBookToLibrary(event) {
     const newBook = new Book(title, author, pages, read);
     myLibrary.push(newBook);
 
-    // Opcjonalnie, możemy wyczyścić pola formularza po dodaniu książki
     document.getElementById("titleInput").value = "";
     document.getElementById("authorInput").value = "";
     document.getElementById("pagesInput").value = "";
@@ -93,10 +97,6 @@ function displayLibrary() {
         addBookToTable(book, index);
     });
 }
-
-Book.prototype.toggleReadStatus = function() {
-    this.read = !this.read;
-};
 
 addBookButton.addEventListener("click", () => {
     newBookDialog.showModal();
